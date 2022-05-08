@@ -1,0 +1,1085 @@
+\documentclass[10pt]{article} 
+
+\usepackage{fullpage}
+\usepackage{bookmark}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref} % for the URL
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathtools}
+\usepackage[most]{tcolorbox}
+\usepackage[amsmath,standard,thmmarks]{ntheorem} 
+\usepackage{physics}
+\usepackage{pst-tree} % for the trees
+\usepackage{verbatim} % for comments, for version control
+\usepackage{tabu}
+\usepackage{tikz}
+\usepackage{float}
+% sets
+\newcommand{\complex}{{\mathbb C}}
+\newcommand{\reals}{{\mathbb R}}
+\newcommand{\rationals}{{\mathbb Q}}
+\newcommand{\integers}{{\mathbb Z}}
+
+% Math notation
+\newcommand{\trnorm}[1]{\left\| #1 \right\|_{\mathrm{tr}}}
+\newcommand{\size}[1]{\left| #1 \right|}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\floor}[1]{{\lfloor #1 \rfloor}}
+\newcommand{\ceil}[1]{{\lceil #1 \rceil}}
+
+\DeclareMathOperator{\fidelity}{F}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\support}{supp}
+
+\DeclareMathOperator{\Order}{O}
+\DeclareMathOperator{\Span}{span}
+\DeclareMathOperator{\expct}{{\mathbb E}}
+
+\newcommand{\transpose}{\top}
+\newcommand{\e}{{\mathrm{e}}}
+\newcommand{\complexi}{{\mathrm{i}}}
+
+\newcommand{\id}{{\mathbb 1}}
+\newcommand{\ind}{{\mathbb 1}}
+
+\newcommand{\poly}{{\mathrm{poly}}}
+
+% linear algebra, geometry, QI
+\newcommand{\linear}{{\mathsf L}}
+\newcommand{\unitary}{{\mathsf U}}
+\newcommand{\sphere}{\mathsf{Sphere}}
+\newcommand{\qstate}{{\mathsf D}}
+\newcommand{\Pos}{{\mathsf{Pos}}}
+\newcommand{\su}[2]{\sum_{#1}^{#2}}
+
+% quantum physics notation
+\newcommand{\density}[1]{\ketbra{#1}{#1}}
+\newcommand{\ancilla}{\ket{\bar{0}}}
+
+% mnemonics
+\newcommand{\eqdef}{\coloneqq}
+\newcommand{\tensor}{\otimes}
+\newcommand{\Tensor}{\bigotimes}
+\newcommand{\xor}{\oplus}
+\newcommand{\union}{\cup}
+\newcommand{\intersect}{\cap}
+\newcommand{\meet}{\wedge}
+\newcommand{\up}{\uparrow}
+\newcommand{\down}{\downarrow}
+\newcommand{\compose}{\circ}
+\newcommand{\adjoint}{*}
+
+
+\lstnewenvironment{python}{
+\lstset{frame=tb,
+language=Python,
+aboveskip=3mm,
+belowskip=3mm,
+showstringspaces=false,
+columns=flexible,
+basicstyle={\small\ttfamily},
+numbers=none,
+numberstyle=\tiny\color{Green},
+keywordstyle=\color{Violet},
+commentstyle=\color{Gray},
+stringstyle=\color{Brown},
+breaklines=true,
+breakatwhitespace=true,
+tabsize=2}
+}
+{}
+
+\lstnewenvironment{cpp}{
+\lstset{
+backgroundcolor=\color{white!90!NavyBlue},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+basicstyle={\scriptsize\ttfamily},        % the size of the fonts that are used for the code
+breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+breaklines=true,                 % sets automatic line breaking
+captionpos=b,                    % sets the caption-position to bottom
+commentstyle=\color{Gray},    % comment style
+deletekeywords={...},            % if you want to delete keywords from the given language
+escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+% firstnumber=1000,                % start line enumeration with line 1000
+frame=single,	                   % adds a frame around the code
+keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+keywordstyle=\color{Cyan},       % keyword style
+language=c++,                 % the language of the code
+morekeywords={*,...},            % if you want to add more keywords to the set
+% numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+% numbersep=5pt,                   % how far the line-numbers are from the code
+% numberstyle=\tiny\color{Green}, % the style that is used for the line-numbers
+rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+showstringspaces=false,          % underline spaces within strings only
+showtabs=false,                  % show tabs within strings adding particular underscores
+stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+stringstyle=\color{GoldenRod},     % string literal style
+tabsize=2,	                   % sets default tabsize to 2 spaces
+title=\lstname}                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+{}
+
+% floor, ceiling, set
+\DeclarePairedDelimiter{\iprod}{\langle}{\rangle}
+
+\DeclareMathOperator{\Int}{int}
+\DeclareMathOperator{\mean}{mean}
+
+% commonly used sets
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\renewcommand{\P}{\mathbb{P}}
+
+\newcommand{\sset}{\subseteq}
+
+\theoremstyle{break}
+\theorembodyfont{\upshape}
+
+\newtheorem{thm}{Theorem}[subsection]
+\tcolorboxenvironment{thm}{
+enhanced jigsaw,
+colframe=Dandelion,
+colback=White!90!Dandelion,
+drop fuzzy shadow east,
+rightrule=2mm,
+sharp corners,
+before skip=10pt,after skip=10pt
+}
+
+\newtheorem{cor}{Corollary}[thm]
+\tcolorboxenvironment{cor}{
+boxrule=0pt,
+boxsep=0pt,
+colback={White!90!RoyalPurple},
+enhanced jigsaw,
+borderline west={2pt}{0pt}{RoyalPurple},
+sharp corners,
+before skip=10pt,
+after skip=10pt,
+breakable
+}
+
+\newtheorem{lem}[thm]{Lemma}
+\tcolorboxenvironment{lem}{
+enhanced jigsaw,
+colframe=Red,
+colback={White!95!Red},
+rightrule=2mm,
+sharp corners,
+before skip=10pt,after skip=10pt
+}
+
+\newtheorem{ex}[thm]{Example}
+\tcolorboxenvironment{ex}{% from ntheorem
+blanker,left=5mm,
+sharp corners,
+before skip=10pt,after skip=10pt,
+borderline west={2pt}{0pt}{Gray}
+}
+
+\newtheorem*{pf}{Proof}
+\tcolorboxenvironment{pf}{% from ntheorem
+breakable,blanker,left=5mm,
+sharp corners,
+before skip=10pt,after skip=10pt,
+borderline west={2pt}{0pt}{NavyBlue!80!white}
+}
+
+\newtheorem{defn}{Definition}[subsection]
+\tcolorboxenvironment{defn}{
+enhanced jigsaw,
+colframe=Cerulean,
+colback=White!90!Cerulean,
+drop fuzzy shadow east,
+rightrule=2mm,
+sharp corners,
+before skip=10pt,after skip=10pt
+}
+
+\newtheorem{prop}[thm]{Proposition}
+\tcolorboxenvironment{prop}{
+boxrule=0pt,
+boxsep=0pt,
+colback={White!90!Green},
+enhanced jigsaw,
+borderline west={2pt}{0pt}{Green},
+sharp corners,
+before skip=10pt,
+after skip=10pt,
+breakable
+}
+
+\setlength\parindent{0pt}
+\setlength{\parskip}{2pt}
+
+
+\begin{document}
+\let\ref\Cref
+
+\title{\bf{cs467}}
+\date{\today}
+\author{Austin Xia}
+
+\maketitle
+\newpage
+\tableofcontents
+\listoffigures
+\listoftables
+\newpage
+\section{Course Information}
+instructor: Ashwin Nayak
+
+Grade: 60\% Assignments+15\%midterm+20\%final
+\section{\date{\today}}
+\subsection{quantum phenomena}
+
+Experiment:
+
+path 0 denoted by $e_0:=(1,0)\in C^2$
+
+path 1 denoted by $e_1:=(0,1)\in C^2$
+
+a:=b means a is defined to be b
+
+initial state of photon $e_0$, denoted $|\ 0>$(a classcial bit being 0)
+
+beam splitter is a linear transform
+$$H:=\frac{1}{\sqrt{2}}\begin{pmatrix}
+    1&1\\
+    1&-1
+\end{pmatrix}$$
+hadamard transformation
+
+after hitting the beam splitter, $$state=H|0>=\frac{1}{\sqrt{2}}(1,1)$$
+this is called a superposition of state 0 and 1. quantum is simutanously in this state
+\newline
+\newline
+state on passing through 2nd beam splitter
+$$state=H\frac{1}{\sqrt{2}}(1,1) = (1,0) = |0>$$
+1,0 here are probability amplitude
+probablity of state $|0>$ being observed = $|its\ amplitude|^2$
+\subsection{qubit, quantum state, measurement}
+qubit $\equiv$ quantum bit $\equiv$ register
+
+it is a unit of quantum computation 
+
+a register can be consistered as 1 qubit or a collection of qubit
+
+state of a qubit $\equiv$ described by a unit vector in $C^2$ (Hilbert space)
+
+measurement $\equiv$ experiment
+
+experiment to probing what state the qubit is in, in the simplest case 
+it is a \emph{complete projective measurement} 
+
+specified by an orthonormal basis $B:=\{|u_0>, |u_1>\}$
+
+example: 
+\begin{itemize}
+    \item 
+standard basis $\{|0>,|1>\}$, read as capt zero
+    \item
+Hadamard $\{|+>, |->\}$
+    \item 
+$\frac{1}{\sqrt{2}}(|0>+i|1>), \frac{1}{\sqrt{2}}(|0>-i|1>)$
+\end{itemize}
+
+\begin{defn}
+    "bra" v $\equiv$ dual of vector v $\equiv$ conjugate transpose of v
+\end{defn}
+
+\begin{ex}
+    question: in lecture you write $<0|=(1,0)$, shouldn't it be $bra(|0>)=(1,0)$
+
+    $<0|=(1,0)$
+
+    $<+|=\frac{1}{\sqrt{2}}(1,1)$
+
+    $<v_0| = \frac{1}{\sqrt{2}}(1,-i)$
+\end{ex}
+
+the inner product between two vectors $|u>, |v> \in C$
+
+is denoted as $<u|v>:=<u|*|v>$
+
+\begin{ex}
+    $<0|+>=\frac{1}{\sqrt{2}}$
+
+    $<+|v_0>=(1+i)/2$, abs value is $\frac{1}{\sqrt{2}}$
+\end{ex}
+
+Effect of a measurement in $B:=\{|u_0>, |u_1>\}$
+on a qubit in state $|v>$:
+\begin{itemize}
+    \item we observe outcome "0" or "1"
+    \item see outcome $b\in\{0,1\}$, with prob $|<u_b|v>|^2$
+    \item when outcome b is observed, state become $|u_0>$,
+    the state collapses to $|u_0>$
+\end{itemize}
+
+\begin{ex}
+    Measure $|+>$ in basis 
+    \begin{itemize}
+        \item $B:=\{|0>,|1>\}$ outcomes 0/1, when outcome =b, state = $|b>$
+        \item $B:=\{|v_0>,|v_1>\}$, outcome 0 with prob $|<v_0|+>|^2 = (\frac{1}{\sqrt{2}})^2=1/2$
+        final state = $|v_b>$ when outcome = b
+    \end{itemize}
+\end{ex}
+
+general case is 
+\emph{complete von neumann measurement}
+
+\subsection{bit commitment}
+simple, single mesg. protocol
+
+commit stage:
+\begin{itemize}
+    \item Alice has a bit $a\in \{0,1\}$. She sends a message m (depending on a) to Bob
+    \item Bob receives m stores it
+\end{itemize}
+
+Reveal phase:
+\begin{itemize}
+    \item Alice sends bit a, msg r to Bob
+    \item Bob use r to check that m is consistent with a, if so accept
+\end{itemize}
+
+Requirements:
+\begin{itemize}
+    \item Hiding property: Bob cannot learn bit 'a' from message m 
+    \item Binding property: Alice cannot send bit $\bar{a}$, and some message r s.t. Bob accept
+\end{itemize}
+
+Classically, Bob can learn bit a from m or Alice can cheat
+
+Quantumly, we can have a protocal that solve this 
+
+\emph{Quantum Protocal}
+\begin{itemize}
+    \item 
+Alice has a state $a\in \{0,1\}$ Perpares a qubit M in state $|\phi_a>$
+    \item She sends M to Bob. who stores this qubit, this complete the commitment stage
+\end{itemize}
+
+$\theta := \pi/8 \\ |\psi_0> := \alpha |0> + \beta |1>\\
+\alpha := cos(\pi/8), \beta = sin(\pi/8)\\|\psi_1>:=\beta |0> + \alpha |1>$
+
+Reveal Stage 
+\begin{itemize}
+    \item Alice send bit a, and no other msg r 
+    \item Bob measures qubit M in basis
+     $\{|\psi_a>, |\tilde{\psi_a}>\}$
+
+     He accepts (a) if cutcome = 0, reject o.w.
+\end{itemize}
+
+Proposition: this protocal satisfies the hiding and binding properties
+in a probablitistic sense:
+
+(a) Given the qubit M, regardless of which measurement Bob makes,
+P(outcome=a)$\leq \delta$ for some $\delta < 1 $
+
+(b) For any state in which Alice prepares M, if she wishes to claim bit b 
+in the reveal stage, 
+P(Bob accepts b)$\leq \delta$ for some $\delta < 1 $
+
+Hiding property:
+
+we can show that the optimal measurement $\{|u_0>,|u_1>\}$
+s.t. Pr(outcome=a | $|\psi_a>$) is maximized is given by 
+$|u_0> := |0>, |u_1>:=|1>$
+
+Concealing property 
+
+claim: $|\psi>$ is state that maximizes the $$min_{a\in \{
+    0,1\}} |<\psi_a|\psi>|^2$$
+
+\subsection{multiple qubit}
+general quantum state is a unit vector in $\mathbf{C}^d$
+, $d:=2^n$ spanned by $|x\rangle (e_x)$
+$|\psi\rangle :=\sum_x\alpha_x|x\rangle$
+unit vector means $\sum_{x\in\{0,1\}^n}\abs{\alpha_x}^2=1$
+
+suppose $|u\rangle \in C^{d_1}$, $|v\rangle \in C^{d2}$ the tensor product 
+$|u\rangle \otimes |v\rangle$ is vector in $C^{d1*d2}$
+
+suppose we have indexed unit vectors $\{e_i\}, \{f_j\}$ are std basic vectors 
+for $C^{d1}, C^{d2}$ 
+$$g_{i,j}:=(0,0,0...1,0,0,0...)~~ \text{i is the } (i-1)d_1+j$$
+
+suppose 
+$|u\rangle=\sum u_ie_i\in C^{d1}$
+$|v\rangle=\sum v_if_i\in C^{d2}$
+
+$$|u\rangle \otimes |v\rangle = \sum_{ij}u_iv_jg_{ij}$$
+
+in dirac notation, it is $$\sum_{ij}u_iv_j|i,j\rangle$$
+
+note $|u\rangle|v\rangle = |u,v\rangle=|uv\rangle$
+
+tensor product is bilinear
+
+$$|\psi_1\rangle$$
+
+$$C^{d1d2}\neq\{|u\rangle\otimes|v\rangle: |u\rangle\in C^d 
+|v\rangle \in C^{d2}\}$$
+
+however
+$$C^{d1d2}=span\{|u\rangle\otimes|v\rangle: |u\rangle\in C^d 
+|v\rangle \in C^{d2}\}$$
+
+this span is $C^{d1}\otimes C^{d2}$
+
+product state if can be written as $|a\rangle|b\rangle$
+
+entangled state if cannot 
+
+\subsubsection{properties of tensor products of operator}
+\begin{itemize}
+    \item $(\alpha U)\otimes V=\alpha(U\otimes V)= U\otimes(\alpha V)$
+    \item $(U_1+U_2)\otimes V=U_1 \otimes V+U_2\otimes V$
+    \item $U\otimes (V_1+V_2=U\otimes V_1+U\otimes V_2)$
+    \item $(U_1\otimes V_1)(U_2 \otimes V_2)=(U_1U_2)\otimes(V_1V_2)$
+    \item $(U\otimes V)^*=U^* \otimes V^*$
+    \item $(U\otimes V)^{-1}=U^{-1}\otimes V^{-1}$
+    \item $\norm{U\otimes V} = \norm{U}*\norm{V}$
+\end{itemize}
+\subsubsection{inner product}
+suppose $|u_1v_1\rangle, |u_2v_2\rangle \in C^{d1} \otimes C^{d2}$
+their inner product=$$(\langle u_1v_1|)(|u_2v_2\rangle)=\langle U_1u_2\rangle\langle v_1v_2\rangle$$
+
+suppose $w, w_1, w_2\in C^{d1} \otimes C^{d2}$
+
+$$E_{ij}=e_ie_j^T=e_ie_j^*=|i\rangle\langle j|\\
+U\sum\alpha_{ij}|i\rangle\langle j|$$
+\subsection{measurement}
+measurement of multiple qubits 
+
+A sequence of qubit (registe) M in state $|\psi\rangle\in C^d$
+
+A complete projective measurement of M is specified by an orthonormal basis
+$$B=\{|u_i\rangle: i\in[d]\}$$
+
+\subsubsection{transmission of polorized light}
+
+photon pass through poloarizing film, with a detector on the other side,
+
+\begin{itemize}
+    \item a photon is either absorbed or passes through
+    \item only $|\rightarrow\rangle$ component pass through 
+    \item if state is $\alpha|\rightarrow\rangle+\beta|\uparrow\rangle$
+    we observe the photon at D with probability $|\alpha|^2$
+    \item if we place a second film fim also oriented horizentally, all light is transmitted
+\end{itemize}
+
+
+
+coarser measurment: projective measurement 
+
+specified by a sequence of orthogonal projection operation
+$\{P_i:i\in[k], \sum^k_{i=1}=I\}$
+
+On measurement of M in state $|\psi\rangle\in C^d$
+\begin{itemize}
+    \item we observe a probablitistic coutcome $i\in [k]$
+    \item $p(outcome=i|...)=\norm{P_i|\psi\rangle}^2$
+    \item on outcome i, state of M becomes $$\frac{P_i|\psi\rangle }{\norm{P_i|\psi\rangle}}$$
+\end{itemize}
+
+\subsubsection{general measurement in an 0-n basis}
+$B:=\{\ket{u_i}\}$\\$P_i:=\ketbra{u_i}{u_i}$\\$P_i$ is orthogonal proj
+
+the effect of measuring $\ket{\varphi}$ in B or in $\{P_i\}$ is the same
+
+\begin{ex}
+    we want to check if 2 bit of a 2-qubit state is the same 
+
+    we apply projection $$p_0=\ketbra{00}{00}+\ketbra{11}{11}$$$$p_1=\ketbra{01}{10}+\ketbra{10}{01}$$
+    
+    when we measure $\ket{+-}$ we have 
+
+    $$pob=\norm{p_0\ket{+-}}^2=\norm{\ketbra{00}{00}\ket{+-}+
+    \ketbra{11}{11}\ket{+-}}=\abs{\braket{00}{+-}}^2+\abs{\braket{11}{+-}}^2=1/2$$
+
+    state becomes $\frac{p_0\ket{+-}}{1/\sqrt{2}}=\frac{1}{\sqrt{2}}(\ket{00}-\ket{11})$
+\end{ex}
+
+\subsubsection{measuring subsystem}
+we've got register AB, both have several bits, 
+with state space $C^{d1}\otimes C^{d2}$
+say state of AB is $\ket{\psi}$ we wish to measure register A with projective measurement
+
+measurement $\{P_i:i\in[k]\}$ This is equivalent to measuring AB according to 
+$$\{P_i\otimes 1: i\in[k]\}$$
+
+we can express $\ket{\psi}$ as  $\ket{\psi}=\su{i=1}{d_1}\alpha_i\ket{u_i\psi_i}$
+where $\ket{\psi_i}\in\complex^{d_2}, \norm{\ket{\psi_i}}=1$, but $\{\ket{\psi_i}\}$
+need not be orthogonal
+
+question:how
+
+remark on measurement:
+$$\ket{\psi}=\su{i=1}{d}p_i\ket{\psi}$$ 
+$$1=\norm{\ket{\psi}}^2=\su{i=1}{d}\norm{p_i\ket{\psi}}^2$$
+
+\subsubsection{general measurement}
+we will call it a measurement
+
+A general measurement of a resgister M consist of:
+
+prepare another register $M'$ in a fixed state, $\ket{\bar 0}$
+
+measure $MM'$ with a projective measurement on $C^{d1}\otimes C^{d2}$
+where M has state space in $C^{d1}$, M' in $C^{d2}$
+
+information content of n qubit:
+
+n-qubit state $\ket{\psi}:=\su{x\in\{0,1\}^n}{}\alpha_x\ket{x}$
+
+discription: $2^n$ parameters
+
+However, we may only reliably encode $\theta(n)$ bits into n qubits
+
+\begin{thm}
+    let $x\in\{0,1\}^m$ be uniformly random. suppose we encode $x\in\{0,1\}^m$
+    by n-qubit state $\ket{\psi_x}$ Let Y be outcome of any measurement of the state $\psi_x$
+
+    Let y be outcome of any measurement of state $\ket{\psi_x}$ then $$pr(Y=X)\leq 2^n/2^m$$
+
+    \begin{pf}
+        suppose we measure state according to $\{P_y: y\in\{0,1\}^m\}$
+        ,where outcome y indicates our guess for the encoded string.
+
+        Given state $\ket{\psi_x}$ we append $\ket{\bar 0}\in \complex^{d1}$ and measure 
+        according to proj measurement 
+
+        Note $\sum P_y=1$ then $\exists$ basis $\{\ket{f_{yi}}\}$ o.n. 
+        $$P_y=\sum_i\ketbra{f_{yi}}{f_{yi}}$$
+
+        $pr(y=x)=\frac{1}{2^m}\sum_xPr(y=x|\ket{\psi_x})$
+    \end{pf}
+\end{thm}
+
+evolution of quantum bit 
+\begin{itemize}
+    \item linear 
+    \item reversible/invertible
+    \item norm preserving
+\end{itemize}
+
+computation with qubit may be implemented by allowing system to involve or for subsets of qubit to evolve 
+while maintaining the state of the rest.
+
+if subregister A of register AB evolves according to operator U, evolution of AB is given by 
+$U\otimes 1$ Note $U\otimes 1$ unitary $\leftrightarrow$ U unitary 
+
+a sophiscated computation may involve sequence of such unitary operators applied to different subregisters 
+
+all operations allowed by laws of quantum physics can be expressed as a composition of 
+\begin{itemize}
+    \item addition of ancilla
+    \item unitary evolution of the entire system 
+    \item a projective measurement
+\end{itemize}
+
+\subsection{superdense coding}
+if A and B hold $E_1, E_2$ respectively, where join state is 
+$\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$
+
+suppose alice has 2 bits. she can apply unitary $U_{ab}=X^aZ^b$ to them 
+
+question can we create entangled state
+
+question cheat by entangled
+
+\subsection{teleportation}
+A B connected by classical channel, can send classical bit 
+
+A given qubit M in state $\alpha\ket{0}+\beta\ket{1}$
+She would help B construct $\ket{\psi}$
+
+\begin{thm}
+    there is a protocal if Alice and Bob share $E_1, E_2$
+
+    two qbit in state $\ket{\psi_{00}}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$
+
+
+    the protocal:
+
+    alice has M $E_1$, Bob has $E_2$.
+
+    M in $\alpha\ket{0}+\beta\ket{1}$ Bob has $E_2, E_1E_2$ in state $\ket{\psi_{00}}$
+
+    Alice measures qubits $ME_1$ in Bell basis $\{\ket{\psi_{ab}}\}$
+    she sends the 2bit outcome to Bob
+
+    Bob recieves $ab\in\{0,1\}$ and applies $U_{ab}$ on $E_2$
+
+    $U_{ab}=X^aZ^b$
+
+    where xz are the standard pauli operation
+
+    claim: the final satate of $E_2$ is $\ket{\psi}$
+\end{thm}
+
+An algorithm/program/cuicuit:
+
+$f\{0,1\}^n\rightarrow\{0,1\}^m$
+\begin{itemize}
+    \item number of bits in the memory \emph{size}, holding input and workspace
+    \item a string of s bits, to which memory is initialized. the first n to $\{0,1\}^n$ the rest 0
+    \item a sequence of logic gate from a fixed set G
+    \item the index of register that represent the output
+\end{itemize}
+
+\section{circuit}
+    time: number of gates 
+
+    space: number of wire segment
+    \\\\
+    correctness of a random circuit:
+
+    let $f:\{0,1\}^n \rightarrow \{0,1\}^m$. we say C computes f is $Pr(C(x)=f(x))\geq 2/3$
+    for all inputs x
+
+    \subsection{quantum circuit}
+    \begin{itemize}
+        \item memory consist of qubits 
+        \item quantum gates, performing unitary operation 
+        \item measurement
+    \end{itemize} 
+    it is useful to write quantum gate as CNOT=$\ketbra{0}{0}\otimes I+\ketbra{1}{1}\otimes X$
+
+    we can prepare bell state $\ket{\phi_{00}}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$
+    by:$$\ket{\phi_{00}}=CNOT^{E_2E_1}(1\otimes H)\ket{00}^{E_1E_2}$$ 
+
+    Note: we use register on which oeprator act AND the register which are in that state 
+
+    $Z=HXH~~~Y=iXZ~~~HYH=i(HXH)(HZH)=iZX=-Y$
+
+    measurement:
+
+    we can perform a basis change to unitary, mesaure in unitary, than change it back.
+
+
+    \subsection{universality}
+        quantum physics, any unitary operator can occur,
+
+        can circuit do it?
+
+        we say circuit computes U on n qubits $C^{2^n}$, if for every state 
+        $\ket{\varPsi}\in C^d$, final state is $U\ket{\varPsi}\ket{0}$ with probability 1
+
+        \begin{thm}
+            for any unitary operation U, there is a quantum circuit that uses 
+            only CNOT and single qubit gate and compute U
+        \end{thm}
+
+        but how single qubit gate? how irrational number?
+
+        can we use small number of gate? can we have not precise gate?
+
+        \begin{defn}
+            V approximate U if $\norm{U-V}\leq\epsilon$
+
+            this suffice as $\norm{V\ket{\phi}-U\ket{\phi}}\leq \norm{V-U}$
+
+            when output is close, the measurement statistics also close, 
+            closeness of probability is measured in l1 distance
+            $$\norm{p-q}_1:=\su{k}{i=1}\abs{p_i-q_i}$$
+        \end{defn}
+
+        proposition: when $\norm{\ket{\psi}-\ket{\phi}}\leq \epsilon$
+        $$\norm{p-q}_1\leq 2\epsilon$$
+
+        proof:
+
+        suppose we measure according to $\{P_i: i\in[k]\}$
+
+        $p_i:=\norm{P_i\ket{\psi}}^2~~~~q_i:=\norm{P_i\ket{\psi}}^2$
+        $$\sum \abs{ab}=(\sum a^2)^{1/2}(\sum b^2 )^{1/2}~~~Cauchy-Schwarg$$
+        $$\abs*{\norm{a}-\norm{b}}^2\leq\norm{a-b}^2$$
+    \subsection{approximating unitary operations}
+        if C computes f with probability 2/3 then if $\norm{U-V}\leq \epsilon$,
+        then probability $\bar C$ compute f with probability $\geq 2/3-2\epsilon$
+        
+        proposision:
+        if pq are probability distribution on [k], E be any event;
+        $$\abs*{p(E)-q(E)}\leq \frac{1}{2}\norm{q}_1$$
+
+    \subsection{universality}
+        if $\norm{U-V}\leq \epsilon$
+        output state are within $\epsilon$ in Euclidean distance,
+        distributions over measurement are within $2\epsilon$ in $l_1$ distance,
+
+        \begin{thm}
+            For any unitary operation U on $\complex^d$,
+            $\epsilon \in (0,1)$ there is a quantum circuit that uses only 
+            gates from $\{CNOT, H, T\}$  and computes a unitary operation U
+
+            we say the gate set is universal
+        \end{thm}
+
+
+        what is overhead of approximating unitary operation using these 2 gates?
+
+        \begin{thm}
+            for any $\epsilon$ and operation $U\in U(2)$ there is 
+            a sequence of $O(log\frac{1}{\epsilon})^c$ gates from $\{H, T\}$
+            which computes V where c is a universal constant
+        \end{thm}
+
+        how does the error scale?
+
+        Proposition: if $\norm{U_i-V_i}\leq \epsilon$, then 
+        $$\norm{V_t...V_2V_1-U_t...U_2U_1}\leq t\epsilon$$
+
+        to get overall error $\epsilon$ when approximating m gates, we need 
+        only approximate each gate with error $\epsilon/m$, with a sequence of 
+        $O(log\frac{m}{\epsilon})$ gates each, total size of new circuit is 
+        $O(m(log\frac{m}{\epsilon})^c)$
+    \subsection{implementing measurement}
+        we implement unitary operators $U=\sum \ketbra{i}{u_i}$
+
+        \subsubsection{projective measurement}
+        how to do projective measurement according to $\{P_i:i\in[k]\}$
+
+        recall $P_i=\sum\ketbra{v_{ij}}{V_{ij}}$
+         we implement basis change operator $U:=\sum\ketbra{i,j}{V_{ij}}$        
+
+         \begin{itemize}
+             \item apply U to get indices in register $A_1A_2$
+             \item copy $A_1$ into ancilla B 
+             \item Measure B 
+             \item apply U* to $A_1A_2$
+         \end{itemize}
+
+
+
+    \subsection{efficiency, complexity classes}
+         the complexity of implementing a measurement is captrued by the basis change operation
+
+         if we can efficiently implement basis change operation. we can perform the measurement efficiently
+
+         we say a family of cuicuit $\{C_n\}$ where it has n-qubit imput is 
+         efficient if its size is $O(n^c)$ for a constant c
+
+
+         the complexity class P consist of all family of boolean functions 
+         $\{f_n|f_n:\{0,1\}^n\rightarrow\{0,1\}\}$ which has efficient deterministic 
+         classical circuits 
+
+
+         BPP: bouned error probablitistic polynomial time
+
+         BQP: bouned error quantum polynomial time
+
+         P: polynomial time 
+
+    \subsection{simulating classcial algorithm}
+        we use toffoli gate to simulate $\{And, Not\}$ given ancilla state $\ket{0},\ket{1}$
+
+        clean simulation: we erase the contents of original output register AND the workspace 
+
+        we do this by applying unitary transformation, and copying with cnot gate 
+
+        complexity of clean simulation is efficient
+
+    \subsection{simulating randomized algrithums, basic algorithm:blackbox, Deutrch-Jozza}
+         for random circuit 
+
+         Pr(C(x)=y)=pr(h(x,r)=y), where r is uniformly random over $\{0,1\}^k$,
+
+        k is number of random bit 
+
+        using quantum circuit, we apply $H^{\otimes k}$ to $\ket{0}$
+
+        $\ket{\psi}=\frac{1}{\sqrt{2^k}}\sum_{r\in\{0,1\}}\ket{r}$
+
+        $\ket{\varPsi}=U\ket{x}\ket{\psi}\ket{0}=\frac{1}{\sqrt{2^k}}
+        \sum_r\ket{x}\ket{r}\ket{g(x,r)}\ket{h(x,r)}$
+
+        $pr(output = y)=\frac{1}{2^k}\sum_r 1 (h(x,r)=y)=Pr(h(x,R)=y)$
+         
+        \begin{defn}
+            blackbox or query model, we have a function $f \rightarrow \{0,1\}$
+            and a circuit that computes it.
+
+            classical: x-> f(x)
+
+            quantum: 
+
+            $\ket{x}\rightarrow \ket{x}$
+
+            $\ket{b}\rightarrow \ket{b\ CNOT\ f(x)}$
+
+
+            we call this circuit blackbox or oracle for x.
+        \end{defn}
+
+
+        \begin{defn}
+            An assignment $a\in\{0,1\}^h$ of truth values to x satisfies 
+            $\varphi$ if $\varphi(a)=1$
+        \end{defn}
+
+        a classical circuit C or a quantum one O for checking if a given assignment 
+        satisfies $\varphi$ is a blackbox or oracle 
+
+        given oracle for a function f, we wish to determine if f has some property 
+        property like satisfiability
+
+        the number of uses of the oracle in an algorithm, the number of queries,
+         is called query complexity 
+
+         \begin{thm}
+             $H^{\otimes n}\ket{x}=\frac{1}{2^{n/2}}\otimes^n_{i=1}\left(
+                 \sum _{y_i\in\{0,1\}}(-1)^{x_i-y_i}\ket{y_i}
+             \right)
+                 =\frac{1}{\sqrt{2^n}}\sum_y(-1)^{xy}\ket{y}$
+
+            
+            Also, $\frac{1}{2^n}\sum_x(-1)^{xy}$ = innerproduct of 
+            $\frac{1}{\sqrt{2^n}}\sum_x\ket{x},\frac{1}{\sqrt{2^n}}\sum_x(-1)^{xy}\ket{x}$
+
+            this is innerproduct of $H^{\otimes n}\ket{0^n},H^{\otimes n}\ket{y}$
+
+         \end{thm}
+
+         xy is scalar product $\sum x_iy_i$
+
+         consider a circuit $\ket{x y}\rightarrow \ket{x (y\oplus f(x))}$
+         
+
+         if $f(x)=0,\ket{y}=\ket{-}, \text{second bit become} \\ U_f=\sqrt{1/2}*\ket{0\oplus f(x)} - \ket{1\oplus f(x)} =
+         \sqrt{1/2}*(\ket{0}-\ket{1}) $
+    
+         if $f(x)=1,\ket{y}=\ket{-}, \text{second bit become} \\ U_f=\sqrt{1/2}*\ket{0\oplus f(x)} - \ket{1\oplus f(x)} =
+         -\sqrt{1/2}*(\ket{0}-\ket{1}) $
+
+         this is called phase kickback, where effect of function applying on second qubit becomes a $\pm $ on overall state 
+
+         most generally, 
+         $$U_f:(\alpha\ket{0}+\alpha_1\ket{1})(\ket{-})\rightarrow
+         ((-1)^{f(0)}\alpha_0\ket{0}+(-1)^{f(1)}\alpha_1\ket{1})\ket{-}$$
+
+        it can also be written as , 
+         $$ (-1)^{f(0)}(\alpha_0\ket{0}+(-1)^{f(1)\oplus f(0)}\alpha_1\ket{1})\ket{-}$$
+
+         we can determine $f(1)\oplus f(0)$ this way
+
+
+         \subsection{simon problem}
+
+         $Z_2^n$ forms a group under mod 2 $Z_2$
+
+         $x+y=(x_1+y_1, x_2+y_2 ...)~~~0x=0~~~~ 1x=x$
+
+         there is nonzero element $s\in Z_2^n$ such that  
+         $f(x)=f(y)$ iff $y=x+s$ or $x=y$ 
+
+         note $y=x+s, x=y+s, x+y=s$ are the same, we say f hides the string s.
+
+         to find s we just need to find f(a)==f(b), b-a=s
+
+         $U_f\left(\frac{1}{\sqrt{2}}\ket{00}+\frac{1}{\sqrt{2}}
+         \ket{10}\right)=\frac{1}{\sqrt{2}}\ket{0 f(0)}+\frac{1}{\sqrt{2}}\ket{1 }\ket{0 +f(1)}$
+
+         \begin{thm}[idea of simon algorithm]
+             $$H^{\otimes n}\frac{1}{\sqrt{2}}(\ket{x}+\ket{x\oplus s})
+             =\frac{1}{\sqrt{2^{n-1}}}\sum_{y\in S^{\perp}}
+             (-1)^{xy}\ket{y}$$
+         \end{thm}
+
+    \section{phase estimation}
+         unitary gate $e^{i\psi}$
+         $$
+         \begin{matrix}
+             1 & 0\\
+             0 & e^{i\psi}
+         \end{matrix}$$
+        
+         $Pr(\ket{0})$ observed at $\ket{0}$ is $cos^2 (\psi/2)$
+        at $\ket{1}$ is $sin^2 (\psi/2)$
+
+        \subsection{textbook}
+         \begin{thm}
+             $$\frac{1}{\sqrt{2^n}}\su{2^n-1}{1}e^{2\pi i w y}\ket{y}==
+             (\frac{\ket{0}+e^{2\pi i(2^{n-1}w)}\ket{1}}{\sqrt{2}})\otimes
+             (\frac{\ket{0}+e^{2\pi i(2^{n-2}w)}\ket{1}}{\sqrt{2}})\otimes ...
+             (\frac{\ket{0}+e^{2\pi i(2^{1}w)}\ket{1}}{\sqrt{2}})\otimes$$
+             $$=(\frac{\ket{0}+e^{2\pi i(0.x_nx_{n+1}...) } } {\sqrt{2}})\otimes ...
+             (\frac{\ket{0}+e^{2\pi i(0.x_1x_2...) } } {\sqrt{2}})\otimes$$
+         \end{thm}
+
+         \begin{thm}
+             for phase estimation, $p(x)=\frac{sin^2(\pi(2^nw-x))}{2^{2n}sin^2(\pi (w-x/2^n))}$
+
+             we also have lemma $\abs*{\theta M}<\pi /2$, then $\frac{1}{M^2}\frac{sin^2(M\theta)}{sin^2(\theta)}\geq 4/\pi^2$
+
+             this applies to 2 nearest $2^nw$ to x
+
+             with probability at least $1-\frac{1}{2(k-1)}$ phase estimation will ouptut at least 
+             $2k $ closest integer multiple of $\frac{1}{2^n}$, $\abs*{w-\hat w}\leq \frac{k}{2^n}$ 
+
+             final line: phase estimation will output one of the 2k closest integer multiples of $\frac{1}{2^n}$
+             with probability at least $1-\frac{1}{2(k-1)}$
+         \end{thm}
+
+        \subsection{}
+        more efficient way of estimating: say $\psi = 2\pi\theta$
+
+        $\theta = \theta_1/2+\theta_2/2^2...+\theta_n/2^n$
+
+        $$2^m\psi = 2\pi (2^m\theta) = 2\pi(2^{m-1}\theta_1+2^{m-2}\theta_2...+\theta_m+\frac{\theta_{m+1}}{2}+\frac{\theta_{m+2}}{2^2}...)
+        =
+        2\pi(0.\theta_{m+1}...\theta_1)$$
+        
+        \begin{itemize}
+            \item we can learn $\theta_{m+1}$ by repeating experiment O(1) times, 
+            \item apply the phase shift twice $2\psi \equiv 2\pi(0.\theta_2\theta_3...)$. and we learn $\theta_2$
+            \item more generally, we can pllay the shift $2^m$ times and 
+            $$2^m\psi\equiv 2\pi(0.\theta_{m+1}\theta_{m+2}...)$$
+        \end{itemize}
+        U be the unitary gate $e^{i\psi}$
+        $$U^{2^i} H \ket{0} = \frac{1}{\sqrt{2}}(\ket{0}+e^{2\pi i(2^i\theta)}\ket{1})$$
+        identify a string $y\in\{0,1\}^m$ with corresponding integer $\in\{0,1...,2^m-1\}$
+
+        output state of $(U^{2^{m-1}}H\otimes U^{2^{m-2}}H\otimes  ...) \ket{000..}$
+        $\ket{\psi_\theta} = \frac{1}{\sqrt{2^m}}\su{y=0}{2^n-1}e^{2\pi i \theta y}\ket{y}$
+        
+
+        suppose theta, which we are estimating, is $\theta = a/2^m$ for some $a\in X_{2^m}$
+
+        then $e^{2\pi i a y/2^m} = w^{ay}$ where $w=e^{2\pi i/2^m}$ is a constant root of unity 
+
+        define $\ket{X_x}=\frac{1}{\sqrt{2^m}}\su{2^m-1}{y=0}w^{xy}\ket{y}$
+
+        then $\braket{x_a}{x_b}=0|a\neq b \text{ or } 1|a==b$ due to complex analysis
+
+        \begin{defn}
+            $\{\ket{X_x} 0\leq x < 2^m\}$ is then called the fourier basis.
+        \end{defn}
+
+        if $\theta = a/2^m$ for some a, then we can measure in fourier basis and determine $\theta$ exactly 
+
+        we has Fourier transform operator 
+        $$F_{2^m}=\su{2^{m-1}}{x=0} \ketbra*{X_x}{x}$$
+
+
+        if $\theta$ is not integer multiple of $1/2^m$, of we measure in fourier basis ,
+        pr(outcome = a) is $\abs*{\braket{X_a}{\psi_\theta}}^2$
+
+    \subsection{eigenvalue estimation}
+        V is unitary operator on $C^d$ s.t. we can apply $V^t$ geiven
+
+        \begin{thm}
+            note: when c*d is irrational, $1^{c*d}$ can take infinitely many value, and 
+            $1^{c*d}\neq (1^c)^d$
+        \end{thm}
+
+
+    \section{error correction}
+    \begin{defn}[Hamming code ]
+        it encodes 1 bit into 3
+    \end{defn}
+
+    \begin{defn}[Hamming distance]
+        the number of bits in which $x,y \in\{0,1\}^n$ differ
+        
+    \end{defn}
+
+    \begin{defn}
+        $(n,k,d)_2$ error correction code is a subset $C\in \{0,1\}^n$ of size $2^k$ st 
+        $min\{\delta(x,y)\}:x y \in C, x\neq y=d$
+
+        n is block length, k is message length, d is minimum distance of the code c
+
+        the elements of the code is called codewords. ratio k/n is information rate
+
+        we can recover x if $t\leq (d-1)/2$
+    \end{defn}
+
+    \begin{thm}
+        for any $\epsilon\in [0,1/4)$, information rate $r<1-H(2\epsilon)$ 
+        for all n large enough, there are $(n,k,d)$ error correction code with $k:=floor(rn)$
+        and $d\geq 2\epsilon n +1$
+    \end{thm}
+
+    \begin{defn}
+        a linear (n,k,d) code is [n,k,d] code
+
+        it has a generator matrix
+    \end{defn}
+
+\section{shor code}
+    \begin{thm}[9-qubit shor code]
+        1 qubit into 3 for Z error 
+        $\alpha \ket{0}+\beta\ket{1} \rightarrow \alpha\ket{+++}+\beta\ket{---}$
+
+        then encode each of the three qubits into 3 qubits for X error 
+        $\rightarrow \alpha\frac{1}{2\sqrt{2}}(\ket{000}+\ket{111})^{\otimes 3}+\beta\frac{1}{2\sqrt{2}}(\ket{000}-\ket{111})^{\otimes 3}$
+    \end{thm}
+
+    \begin{lem}
+        if c is [n,k,d] code and $c^\perp$ is $[n,k_2,d_2]$ code with $d_1 d_2 \geq 2t+1$ 
+
+        $\ket{\hat{\psi}} = \frac{1}{2^{k/2}}\sum_{x\in c}\ket{x}$ is a code that correct t errors
+    \end{lem}
+
+\section{encryption protocal}
+
+    protocal pi 
+
+    \begin{itemize}
+        \item alice prepares k bell state $\ket{\psi}^k$ where $\ket{\psi}=\ket{00}+\ket{11}$ in register $A_1B_1$
+        \item Alice encode state in $B_1$ using css code C, C has length n, encoded state is $B^\prime_1$
+        \item alice prepare n bell state $\ket{\psi}^n$ in $A_2B_2$ with one qubit of each bell state in $A_2$  
+        \item alice premute qubits in $B_1^\prime$ and $B_2$ uniformly random  Afterthis step, all communication is done classically
+        \item bob acknowlodge recepit of 2n qubits 
+        \item alice send premutation she used 
+        \item bob inverts the premutation and obtain register $B_2^\prime B_2$
+        \item alice selects  a unifromly random string $S\in\{0,1\}^n$ 
+        \item alice measure ith qubit in $A_2$ in standard basis if $S_i=0$ in hardarmard basis if $S_i=1$, send mesasurement to bob
+            
+        \item alice send outcome of measurement to Bob 
+        \item Bob measrue ith qubit in B2 in standard basis if $S_i=0$, or hadamard if 1 
+        \item Bob compares outcome with those sent by alice 
+        \item let $\delta_0$ be fraction st $S_i=0$ and different, $\delta_1$ simarly 
+        \item if $\delta_0n \geq (\epsilon-v)*n/2$ ob informs alice, they output fail and stop. 
+        \item  if both $\delta_0,\delta_1$ are small, bob use error correction to decode state in $B_1^\prime$ into $B_1$
+        \item  alice and bob mearue k qubits $A_1 B_1$ instandard basis output pass and outcomes $K_A K_B$
+    \end{itemize}
+
+    suppose eve, easedropper apply $P\otimes V$ to qubits sent by alice and private register P, 
+    suppose $P=\otimes_{i\in 1:2n}P_i$ where each $P_i$ is 1 X Z XZ
+
+    suppose $\geq \epsilon 2n$ of $P_i\in \{X,XZ\}$ then output fail with prob $\geq 1-2exp(-cn)$
+
+    proof: let $T\{i\in[2n]:P_i\in\{x,xz\}\}$
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

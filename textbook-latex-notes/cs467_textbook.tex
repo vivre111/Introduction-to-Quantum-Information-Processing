@@ -1,0 +1,595 @@
+\documentclass[10pt]{article} 
+
+\usepackage{fullpage}
+\usepackage{bookmark}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{hyperref} % for the URL
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathtools}
+\usepackage[most]{tcolorbox}
+\usepackage[amsmath,standard,thmmarks]{ntheorem} 
+\usepackage{physics}
+\usepackage{pst-tree} % for the trees
+\usepackage{verbatim} % for comments, for version control
+\usepackage{tabu}
+\usepackage{tikz}
+\usepackage{float}
+
+\lstnewenvironment{python}{
+\lstset{frame=tb,
+language=Python,
+aboveskip=3mm,
+belowskip=3mm,
+showstringspaces=false,
+columns=flexible,
+basicstyle={\small\ttfamily},
+numbers=none,
+numberstyle=\tiny\color{Green},
+keywordstyle=\color{Violet},
+commentstyle=\color{Gray},
+stringstyle=\color{Brown},
+breaklines=true,
+breakatwhitespace=true,
+tabsize=2}
+}
+{}
+
+\lstnewenvironment{cpp}{
+\lstset{
+backgroundcolor=\color{white!90!NavyBlue},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+basicstyle={\scriptsize\ttfamily},        % the size of the fonts that are used for the code
+breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+breaklines=true,                 % sets automatic line breaking
+captionpos=b,                    % sets the caption-position to bottom
+commentstyle=\color{Gray},    % comment style
+deletekeywords={...},            % if you want to delete keywords from the given language
+escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+% firstnumber=1000,                % start line enumeration with line 1000
+frame=single,	                   % adds a frame around the code
+keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+keywordstyle=\color{Cyan},       % keyword style
+language=c++,                 % the language of the code
+morekeywords={*,...},            % if you want to add more keywords to the set
+% numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+% numbersep=5pt,                   % how far the line-numbers are from the code
+% numberstyle=\tiny\color{Green}, % the style that is used for the line-numbers
+rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+showstringspaces=false,          % underline spaces within strings only
+showtabs=false,                  % show tabs within strings adding particular underscores
+stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+stringstyle=\color{GoldenRod},     % string literal style
+tabsize=2,	                   % sets default tabsize to 2 spaces
+title=\lstname}                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+{}
+\newcommand{\su}[2]{\sum_{#1}^{#2}}
+
+% floor, ceiling, set
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\set}{\lbrace}{\rbrace}
+\DeclarePairedDelimiter{\iprod}{\langle}{\rangle}
+
+\DeclareMathOperator{\Int}{int}
+\DeclareMathOperator{\mean}{mean}
+
+% commonly used sets
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\renewcommand{\P}{\mathbb{P}}
+
+\newcommand{\sset}{\subseteq}
+
+\theoremstyle{break}
+\theorembodyfont{\upshape}
+
+\newtheorem{thm}{Theorem}[subsection]
+\tcolorboxenvironment{thm}{
+enhanced jigsaw,
+colframe=Dandelion,
+colback=White!90!Dandelion,
+drop fuzzy shadow east,
+rightrule=2mm,
+sharp corners,
+before skip=10pt,after skip=10pt
+}
+
+\newtheorem{cor}{Corollary}[thm]
+\tcolorboxenvironment{cor}{
+boxrule=0pt,
+boxsep=0pt,
+colback={White!90!RoyalPurple},
+enhanced jigsaw,
+borderline west={2pt}{0pt}{RoyalPurple},
+sharp corners,
+before skip=10pt,
+after skip=10pt,
+breakable
+}
+
+\newtheorem{lem}[thm]{Lemma}
+\tcolorboxenvironment{lem}{
+enhanced jigsaw,
+colframe=Red,
+colback={White!95!Red},
+rightrule=2mm,
+sharp corners,
+before skip=10pt,after skip=10pt
+}
+
+\newtheorem{ex}[thm]{Example}
+\tcolorboxenvironment{ex}{% from ntheorem
+blanker,left=5mm,
+sharp corners,
+before skip=10pt,after skip=10pt,
+borderline west={2pt}{0pt}{Gray}
+}
+
+\newtheorem*{pf}{Proof}
+\tcolorboxenvironment{pf}{% from ntheorem
+breakable,blanker,left=5mm,
+sharp corners,
+before skip=10pt,after skip=10pt,
+borderline west={2pt}{0pt}{NavyBlue!80!white}
+}
+
+\newtheorem{defn}{Definition}[subsection]
+\tcolorboxenvironment{defn}{
+enhanced jigsaw,
+colframe=Cerulean,
+colback=White!90!Cerulean,
+drop fuzzy shadow east,
+rightrule=2mm,
+sharp corners,
+before skip=10pt,after skip=10pt
+}
+
+\newtheorem{prop}[thm]{Proposition}
+\tcolorboxenvironment{prop}{
+boxrule=0pt,
+boxsep=0pt,
+colback={White!90!Green},
+enhanced jigsaw,
+borderline west={2pt}{0pt}{Green},
+sharp corners,
+before skip=10pt,
+after skip=10pt,
+breakable
+}
+
+\setlength\parindent{0pt}
+\setlength{\parskip}{2pt}
+
+
+\begin{document}
+\let\ref\Cref
+
+\title{\bf{cs467}}
+\date{\today}
+\author{Austin Xia}
+
+\maketitle
+\newpage
+\tableofcontents
+\listoffigures
+\listoftables
+\newpage
+\section{introduction and background}
+The non-intuitive behavior of photon-mirror-beamsplitter system
+results from features of quantum mechanics called \emph{superposition and interference}
+
+the second beam aplitter has caused two paths (in superposition) to interfere,
+resulting in cancelation of the 0 path
+
+\section{linear albegra}
+\begin{defn}[Hilbert space]
+    finite-dimensional complex vector space H
+\end{defn}
+\subsection{Dual Vectors}
+\begin{itemize}
+    \item linearity in second argument 
+    $$\langle v, \sum_i\lambda_iw_i\rangle =
+    \sum_i\lambda_i\langle v, w_i \rangle $$
+    \item conjugate-commutativity
+    $$\langle v, w\rangle = \langle w, v\rangle^*$$
+    \item nonnegativity 
+    $$\langle v,v\rangle \geq 0$$
+    with equality iff v=0
+\end{itemize}
+c* means complex conjugate of number c
+
+$v\cdot w =\sum_i v_i^*w_i$
+
+\begin{defn}[$H^*$]
+    let H be a hilbert space, $H^*$ is the set of linear maps $H\rightarrow C$
+
+We denote elements of $H^*$ by $\langle x|$, where $\langle X |$ has action
+    $$\langle X|:|\psi\rangle\rightarrow\langle X | \psi \rangle \in C$$
+\end{defn}
+The set of maps $H^*$ is a complex vector space itself, is called the 
+the \emph{dual vector space} associated with H.
+
+The vector $\langle x|$ is called the dual of $|x\rangle$, 
+it's derived from transposing $|x\rangle$ to row matrix and taking complex conjugate
+
+Note dot product of complex vectors are 
+$$\mathbf{A}\cdot\mathbf{B}=\sum_i a_i^*b_i$$
+
+\begin{defn}[Euclidean norm of $|\psi\rangle$]
+    norm of a vector $|\psi\rangle$ is $\norm{|\psi\rangle}\equiv \sqrt{\langle\psi|\psi\rangle}$
+\end{defn}
+
+
+\begin{defn}[Kronecker delta function$\delta_{i,j}$]
+    it is 1 whenever i=j, 0 othervise
+\end{defn}
+
+\begin{thm}[dual basis]
+    the set $\{\langle b_n|\}$ is an orthonormal basis for $H^*$ called the dual basis
+\end{thm}
+
+\subsection{operators}
+
+outer product 
+$$(|\psi\rangle\langle\varphi|)|\alpha\rangle =
+|\psi\rangle(\langle\varphi|\alpha\rangle) = 
+(\langle\varphi|\alpha\rangle)|\psi\rangle$$
+
+outer project of a vector with itself defines a lienar operators $|\psi\rangle\langle\psi|$
+
+\begin{defn}[orthogonal projector]
+    it projects a vector in H to 1 dimensional subspace of H spanned by 
+    $|\psi\rangle$. sunch an operator is called an orthogonal projector
+\end{defn}
+
+\begin{thm}
+    let $B=\{|b_n\rangle\}$ be an orthonormal basis for 
+    vector space $\mathbb{H}$, then every line operator T on H can be written as 
+    $$T=\sum_{b_n, b_m \in B}T_{n,m}|b_n\rangle\langle b_m|$$
+    where $T_{n,m}=\langle b_n | T | b_m \rangle$
+\end{thm}
+
+the set of all linear operators on vector space H forms a new complex vector space $L(H)$
+
+vectors in L(H) are linear operators on H 
+the basis vectors for L(H) are all possible outer products of pairs of basis vectors from B $\{|b_n\rangle\langle b_m|\}$
+
+the action of T is then 
+$$T:|\psi\rangle \rightarrow\sum_{b_n,b_m\in B}T_{n,m}\langle 
+b_m|\psi\rangle|b_n\rangle$$
+
+$T_{n,m}$ is matrix entry of T 
+
+\begin{defn}[identity operator/resolution of the identity]
+    for any orthonormal basis $B=\{|b_n\rangle\}$ identity operator is 
+    $$1=\sum_{b_n\in B}|b_n\rangle\langle b_n |$$
+\end{defn}
+
+\begin{itemize}
+    \item $H \rightarrow C  \in H^* $ corresponds to some vector $\langle \varphi^\prime|$
+    \item adjoint of T, $T^\dagger$ sends $|\varphi\rangle \rightarrow |\varphi^\prime \rangle$
+\end{itemize}
+
+\begin{defn}
+    adjoint of T, $T^\dagger$ is linear operator on $H^*$ that satisfies 
+    $$(\langle\psi|T^\dagger|\varphi\rangle)^*=(\langle\varphi|T|\psi\rangle)~~~\forall|\psi\rangle, |\varphi\rangle \in H$$
+    
+\end{defn}
+
+$T^\dagger$ is just complex conjugate transpose of T,
+also called Hermitean conjugate, adjoint of T
+
+\begin{defn}[unitary]
+    U is unitary if $U^\dagger=U^{-1}$
+\end{defn}
+
+\begin{defn}[Hermitean]
+    an operator T in Hilbert space H is called Hermitean (self adjoint) if 
+    $$T^\dagger=T$$
+\end{defn}
+
+\begin{defn}[projector, orthogonal projecter]
+    A projector on vector space H is a linear operator P that satisfies 
+    $P^2=P$, an orthogonal projector also satisfies 
+    $P^\dagger=P$
+\end{defn}
+
+\begin{thm}
+    if $T==T^\dagger~~T|\psi\rangle==\lambda|\psi\rangle$, then 
+    $\lambda \in R$
+\end{thm}
+
+\begin{defn}[trace]
+    $Tr(A)=\sum_{b_n}\langle b_n|A|b_n\rangle$
+    where $\{|b_n\rangle\}$ is any orthonormal basis
+\end{defn}
+
+\subsection{spectral Theorem}
+
+\begin{defn}[normal]
+    A is normal operator if 
+    $$AA^\dagger=A^\dagger A$$
+    both unitary and hermitean operators are normal
+\end{defn}
+
+\begin{thm}[spectral Theorem]
+    for every normal operator T acting on a finite-dimentional Hilbert space H,
+    there is an orthonormal basis of H consisting of eigenvectors $|T_i\rangle$ of T
+
+    We refer to T written in its own eigenbasis as the spectral decomposition of T.
+
+    The set of eigenvalues of T is called the sepctrum of T
+\end{thm}
+
+$T=\sum_iT_i|T_i\rangle\langle T_i|$ where $T_i$ are eigen values, $|T_i\rangle$ are eigenvectors
+
+another way of saying the spectral theorem is 
+\begin{thm}
+    For every finite dimensional normal matrix T there is a unitary matrix 
+    P such that $T=PDP^\dagger$ where D is a diagonal matrix
+
+    diagonal entries of D are eigenvalues of T. columns of P encode eigenvectors of T
+\end{thm}
+
+\subsection{Functions of Operators}
+
+with spectral theorem we can write any normal operator T to 
+$$T=\sum_iT_i|T_i\rangle\langle T_i|$$
+
+Note each $|T_i\rangle\langle T_i|$ is a projector
+
+
+Talor series for any function f acting on an operator T will have 
+$$f(T)=\sum_ma_mT^m$$
+If T is written in diagonal form,
+then$$f(T)=\sum_if(T_i)|T_i\rangle\langle T_i|$$
+
+\subsection{Tensor Products}
+\begin{itemize}
+    \item For any $c\in\mathbf{C},|\psi_1\rangle\in H_1, |\psi_2\rangle\in H_2$
+    $$c(|\psi_1\rangle\otimes|\psi_2\rangle)=
+    (c|\psi_1\rangle)\otimes|\psi_2)=
+    |\psi_1\rangle\otimes(c|\psi_2\rangle)$$
+    \item for any $|\psi_1\rangle$, $|\varphi_1\rangle\in H_1$, $|\psi_2\rangle\in H_2$
+    $$(|\psi_1\rangle+|\varphi_1\rangle)\otimes|\psi_2\rangle=
+    |\psi_1\rangle\otimes |\psi_2\rangle+|\varphi_1\rangle\otimes|\psi_2\rangle$$
+    \item for any $|\psi_1\rangle$, $|\varphi_1\rangle\in H_1$, $|\psi_2\rangle\in H_2$
+    $$|\psi_1\rangle\otimes(|\psi_2\rangle+|\varphi_2\rangle)=
+    |\psi_1\rangle\otimes |\psi_2\rangle+|\psi_1\rangle\otimes|\varphi_2\rangle$$
+\end{itemize}
+
+$$(A\otimes B)(|\psi_1\otimes|\psi_2\rangle)\equiv A|\psi_1\rangle \otimes B |\psi_2\rangle$$
+
+
+\section{Qubits and the framework of quantum mechanics}
+Quantum information is the result of reformulating information theory 
+in this quantum framework
+
+\subsection{State of a Quantum System}
+the light-splitter example is an example of a 2-state quantum system:
+
+a photon that follow one of two paths, which we identify by 
+$\begin{pmatrix}
+   1\\
+   0 
+\end{pmatrix}$
+and
+$\begin{pmatrix}
+   0\\
+   1 
+\end{pmatrix}$
+
+and noted a path state of the photo can be described as 
+$\begin{pmatrix}
+   \alpha_0\\
+   \alpha_1
+\end{pmatrix}$
+with $|\alpha_0|^2+|\alpha_1|^2=1$
+
+\begin{defn}[State Space Postulate]
+    the state of a system is described by a unit vector in a Hilbert Space $\mathbb{H}$
+\end{defn}
+
+$\mathbb{H}$ can be infinite dimensional.
+
+In practice, we cannot distinguish a continous state from a discrete state having small spacing
+
+we label one basis vector with $|0>$, one with $|1>$, they are orthogonal to each other
+
+we represent general state by $\alpha_0 |0>+\alpha_1 |1>$
+with $|\alpha_0|^2+|\alpha_1|^2=1$
+
+$\alpha_0$ and $\alpha_1$ are complex coefficient, often called \emph{amplitude} of basis state $|0>$ and $|1>$
+
+amplitude $\alpha$ can be decomposed uniquely as a product $e^{i\theta}|\alpha|$
+where $|\alpha|$ is non-negative corresponding to magnitude of $\alpha$,
+$e^{i\theta}$ has norm 1.
+
+value $\theta$ is \emph{phase}, $e^{i\theta}$ is \emph{phase vector}
+
+the state is described by unit vector means $|\alpha_0|^2+|\alpha_1|^2=1$
+
+this is called \emph{normalization constriant}
+
+vector $e^{i\theta}|\phi>$ is equivalent to the state described by $|\phi>$
+
+example of $\phi$ would be $|0> + |1>$
+
+question: is this example not considering it has 100\% appearing in 0 and 1 state
+
+On the other hand, relative phase factors between 2 orthogonal states in superposition
+are physically significant, and the state described by the vector
+
+$|0>+|1>$ is physically different from $|0>+e^{i\theta}|1>$
+
+\begin{thm}[State SpacePostulate]
+    we can describe the most general state $|\phi>$ of a single qubit by a vector of form 
+    $$|\phi>=cos(\theta/2)|0> + e^{i*k}sin(\theta/2)|1>$$
+\end{thm}
+
+
+on a classical computer, a \emph{classical bit} could be represented by a 0/1,
+
+there is also probablitistic classical bit
+$\begin{pmatrix}
+    p_0\\p_1
+\end{pmatrix}$
+
+we can represent two probabilities by 2-dimensional unit vector 
+
+now we go back to quantum bit, which is described by a complex unit vector 
+$|\phi>$ in 2 dimentional Hilbert space. Up to a (physically insignificant)
+flobal phase factor, such a vector can be written in the form 
+    $$|\phi>=cos(\theta/2)|0> + e^{i*k}sin(\theta/2)|1>$$
+
+this state vector is often depicted as a point on a 3-dimentional sphere, the \emph{Bloch Sphere}
+
+points on the sphere can be expressed in Cartesian corrdinates as 
+
+$$(x,y,z)=(sin\theta cos\phi, sin\theta sin\phi, cos\theta)$$
+
+\subsection{Time Evolution of a Closed System}
+
+\begin{thm}[Evolution Postulate]
+    The time-Evolution of state of a \emph{closed} quantum system 
+    is described by a unitary operator. that is for any evolution of 
+    the closed system there exsist a unitary operator U s.t. if initial state 
+    is $|\psi_i>$ then after evolution the state will be 
+    $$|\psi_2> = U |\psi_1>$$
+\end{thm}
+
+\subsection{Composite Systems}
+
+How to described a closed system of n qubits. how it envolves and what happens when we measure it. 
+
+we treat it as a composition of subsystems
+
+\begin{thm}[Composition of Systems Postulate]
+    When two physical systems are treated as one combined system.
+    the state space of combined physical system is product space $H_1\otimes H_2$ of 
+    the state space $H_1, H_2$ of the component subsystems.
+
+    If first system is in state $|\psi_1>$, second system in state $|\psi_2>$,
+    the state of combined system is $$|\psi_1>\otimes |\psi_2>$$
+\end{thm}
+
+We write the joint state like $|\psi_1\rangle|\otimes\psi_2\rangle$ or $|\psi_1\rangle|\psi_2\rangle$
+
+If 2 qubits are allowed to intreact, the closed system includes both qubits together, 
+it might not be possible to write the state in product form. 
+Then we say the qubits are \emph{entangled}
+
+The state of composite system is a vector in 4-dimensional tensor product space of 
+2 constituent qubits. The 4-dimensional state vectors formed by tensor product of 
+the 2 2-dimensional state vectors form a sparce subset of all 4-dimensional state vectors. 
+
+Most 2-qubits states are entangled.
+
+A state is tangled if the equation has no solution of $\alpha$ and $\beta$
+$$|\psi\rangle=(\alpha_0|0\rangle+\alpha_1|1\rangle)(\beta_0|0\rangle+\beta_1|1\rangle)$$
+
+for example $$|\psi\rangle=\frac{1}{\sqrt{2}}|0\rangle|0\rangle
++\frac{1}{\sqrt{2}}|1\rangle|1\rangle$$
+
+This is EPR pair. If we use X to first qubit, Y to second qubit,
+
+the system $|\psi_1\rangle\otimes|\psi_2\rangle$ is mapped to 
+$$X|\psi_1\rangle\otimes I|\psi_2\rangle=(X\otimes I)(|\psi_1\rangle\otimes|\psi_2\rangle)$$
+
+\subsection{Measurement}
+state of a single-qubit system is represented as a vector in Hilbert space
+
+The evolution of state of a system during a Measurement is not unitary 
+
+if the state $\sum_i\alpha_i|i>$ is provided as input.
+it will output i with probability $|\alpha_i|^2$ and leave the system in state $|i>$
+
+\begin{thm}
+    For a given orthonormal basis $B=\{|\varphi_i \}$ of a state space $H_A$
+    for a system A, it's possible to perform a Von Neumann measurement on system $H_A$
+    with respect to basis B that, given a state 
+    $$|\psi\rangle = \sum_i\alpha|\varphi_i\rangle$$
+    outputs label i with probablity $|\alpha_i|^2$ and leaves the system in state $|\varphi_i\rangle$
+
+    For state $|\psi\rangle=\sum_i\alpha_i|\varphi_i\rangle$, note that 
+    $\alpha_i=\langle\varphi_i|\psi\rangle$ and thus 
+    $$|\alpha_i|^2=\alpha_i*\alpha_i=\langle\psi|\varphi_i\rangle\langle\varphi_i|\psi\rangle$$
+\end{thm}
+
+
+One slight generalization of Von Neumann measurements:
+
+A Von Neumann Measurement is special kind of projective Measurement
+
+Recall orthogonal projection is operator P with 
+
+Note: $A^\dagger$ stands for congugate transpose of A
+$$P^2=P, P^\dagger = P$$
+
+For any decomposition of identy operator $I=\sum_iP_i$
+into orthogonal projectors $P_i$, there exisits projective Measurement
+that outputs i with probablity $p(i)=\langle \psi|P_i|\psi\rangle$
+and leaves the system in renormalized state $\frac{P_i|\psi\rangle}{\sqrt{p(i)}}$.
+
+In other words, this measurement projects the input state $|\psi\rangle$ into 
+one of the orthogonal subspaces corresponding to the projection operators 
+$P_i$, with probablity of sqaure of amplitude of component of $|\psi|\rangle$ in that subspace
+
+
+Von Neumann measurement is special case of a projective measurement where all projectors $P_i$ has rank one 
+(in other words, are of $|\psi_i\rangle\langle\psi_i|$)
+
+The simplest example of a Von Neumann measurement is a complete measurement in the 
+computational basis. This can be viewed as following decompositon 
+$$I=\sum_{i\in\{0,1\}^n}P_i$$
+where $P_i=|i\rangle\langle i|$
+
+projective measurements are often described as \emph{observable}
+An observable is a Hermitean operator M acting on state space of the system 
+it has decomposition
+$$M=\sum_im_iP_i$$
+where $P_i$ is orthogonal projector on eigenspace of $M$ with real eigenvalue $m_i$
+
+Measuring the observable corresponds to performing a projective measurement 
+with respect to the decomposition $I=\sum_iP_i$ where the measurement outcome 
+i corresponds to eigenvalue $m_i$
+
+$$\norm*{|\psi\rangle}\equiv ... $$
+
+
+\section{circuit model of computation}
+uniform families of reversible circuits: model of computation
+
+ Circuits are networks composed of wires that carry bit values to gates that 
+ perform elementary operations on the bits
+
+ acyclic, bits move through circuit in a linear fashion, wires never feed back to a prior location in the circuit. 
+
+ A circuit has n wires. input -> enter at most one gate at one time -> output
+
+ A family of circuits is a set of circuits $\{C_n|n\in Z^+\}$
+
+ \begin{defn}
+     a set of gates is universal if for any f, n,m $f:\{0,1\}^n\rightarrow \{0,1\}^m$
+
+     a circuit can be constructed for f using only gates from that set
+ \end{defn}
+
+ for circuits model, measuring complexity,
+
+ we can measure the number of gates/depth of the circuit.
+
+ the time slices (different from gate as concurrency)
+
+ bits, number of lines
+
+\section{blackbox model}
+    the input is provided by a blackbox or oracle. for aceessing information 
+    about an unkonwn string 
+
+\end{document}

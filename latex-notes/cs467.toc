@@ -1,0 +1,33 @@
+\contentsline {section}{\numberline {1}Course Information}{3}{section.1}%
+\contentsline {section}{\numberline {2}\date {April 20, 2021}}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}quantum phenomena}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}qubit, quantum state, measurement}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}bit commitment}{4}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}multiple qubit}{5}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}properties of tensor products of operator}{6}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}inner product}{6}{subsubsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.5}measurement}{6}{subsection.2.5}%
+\contentsline {subsubsection}{\numberline {2.5.1}transmission of polorized light}{6}{subsubsection.2.5.1}%
+\contentsline {subsubsection}{\numberline {2.5.2}general measurement in an 0-n basis}{7}{subsubsection.2.5.2}%
+\contentsline {subsubsection}{\numberline {2.5.3}measuring subsystem}{7}{subsubsection.2.5.3}%
+\contentsline {subsubsection}{\numberline {2.5.4}general measurement}{7}{subsubsection.2.5.4}%
+\contentsline {subsection}{\numberline {2.6}superdense coding}{8}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}teleportation}{9}{subsection.2.7}%
+\contentsline {section}{\numberline {3}circuit}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}quantum circuit}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}universality}{10}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}approximating unitary operations}{10}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}universality}{10}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}implementing measurement}{11}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}projective measurement}{11}{subsubsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.6}efficiency, complexity classes}{11}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}simulating classcial algorithm}{11}{subsection.3.7}%
+\contentsline {subsection}{\numberline {3.8}simulating randomized algrithums, basic algorithm:blackbox, Deutrch-Jozza}{12}{subsection.3.8}%
+\contentsline {subsection}{\numberline {3.9}simon problem}{13}{subsection.3.9}%
+\contentsline {section}{\numberline {4}phase estimation}{13}{section.4}%
+\contentsline {subsection}{\numberline {4.1}textbook}{13}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}}{14}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}eigenvalue estimation}{15}{subsection.4.3}%
+\contentsline {section}{\numberline {5}error correction}{15}{section.5}%
+\contentsline {section}{\numberline {6}shor code}{15}{section.6}%
+\contentsline {section}{\numberline {7}encryption protocal}{16}{section.7}%
